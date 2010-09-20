@@ -51,19 +51,30 @@ define_with_central_layout('ssrs', true) do
   compile.options.target = '1.6'
   compile.options.lint = 'all'
 
-  desc "SSRS API: ReportingServices 2005"
-  define_with_central_layout "reportingservices-2005" do
+  desc "SSRS API: Report Service 2005"
+  define_with_central_layout "report-service-2005" do
     wsimport(project,
              _('../src/main/wsdl/ReportService2005.wsdl'),
              "Server/ReportService2005.asmx",
-             "com.microsoft.sqlserver.ssrs.reportingservices_2005")
+             "com.microsoft.sqlserver.ssrs.reportservice2005")
 
     package(:bundle).tap do |bnd|
-      bnd['Export-Package'] = "com.microsoft.sqlserver.ssrs.reportingservices_2005.*;version=#{version}"
+      bnd['Export-Package'] = "com.microsoft.sqlserver.ssrs.reportservice2005.*;version=#{version}"
     end
   end
 
-  #TODO: Add ReportExecution2005
+  desc "SSRS API:  Report Execution 2005"
+  define_with_central_layout "report-execution-2005" do
+    wsimport(project,
+             _('../src/main/wsdl/ReportExecution2005.wsdl'),
+             "Server/ReportExecution2005.asmx",
+             "com.microsoft.sqlserver.ssrs.reportexecution2005")
+
+    package(:bundle).tap do |bnd|
+      bnd['Export-Package'] = "com.microsoft.sqlserver.ssrs.reportexecution2005.*;version=#{version}"
+    end
+  end
+
   #TODO: Need to add ReportService2010 when we move to SQL Server 2008 R2
 end
 
