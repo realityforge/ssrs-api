@@ -26,17 +26,17 @@ def wsimport(project, wsdl_file, endpoint_url_spec, package_name)
   package_info_filename = "#{dir}/#{package_name.gsub('.', '/')}/package-info.java"
   directory(dir)
   file(package_info_filename => [dir, wsdl_file]) do
-    sh "wsimport",
-       wsdl_file,
-       "-quiet",
-       "-Xnocompile",
-       "-wsdllocation",
-       "http://example.org/#{endpoint_url_spec}",
-       "-keep",
-       "-s",
-       dir,
-       "-p",
-       package_name
+    system "wsimport",
+           wsdl_file,
+           "-quiet",
+           "-Xnocompile",
+           "-wsdllocation",
+           "http://example.org/#{endpoint_url_spec}",
+           "-keep",
+           "-s",
+           dir,
+           "-p",
+           package_name
   end
   project.compile.prerequisites << package_info_filename
   project.compile.from dir
