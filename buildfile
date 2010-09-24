@@ -3,6 +3,7 @@ GROUP = 'au.com.stocksoftware'
 
 require 'buildr_bnd'
 
+repositories.remote << 'http://www.ibiblio.org/maven2'
 repositories.remote << Buildr::Bnd.remote_repository
 
 class CentralLayout < Layout::Default
@@ -40,6 +41,7 @@ def wsimport(project, wsdl_file, endpoint_url_spec, package_name)
   end
   project.compile.prerequisites << package_info_filename
   project.compile.from dir
+  file(package_info_filename)
 end
 
 
@@ -65,10 +67,21 @@ define_with_central_layout('ssrs', true) do
 
   desc "SSRS API:  Report Execution 2005"
   define_with_central_layout "report-execution-2005" do
-    wsimport(project,
-             _('../src/main/wsdl/ReportExecution2005.wsdl'),
-             "Server/ReportExecution2005.asmx",
-             "com.microsoft.sqlserver.ssrs.reportexecution2005")
+    gen_task = wsimport(project,
+                        _('../src/main/wsdl/ReportExecution2005.wsdl'),
+                        "Server/ReportExecution2005.asmx",
+                        "com.microsoft.sqlserver.ssrs.reportexecution2005")
+   
+    task 'post-process-source' => [gen_task] do
+      filename = project._(:target, :generated, :main, :java, "com/microsoft/sqlserver/ssrs/reportexecution2005/ExecutionHeader.java")
+      mv filename, "#{filename}.bak" 
+      File.open(filename,'w+') do |output_file|
+        output_file.puts File.read("#{filename}.bak").gsub(/public class ExecutionHeader/, "@javax.xml.bind.annotation.XmlRootElement(name=\"ExecutionHeader\")  public class ExecutionHeader")
+      end
+	  rm "#{filename}.bak"
+    end
+
+    compile.prerequisites << 'post-process-source'
 
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "com.microsoft.sqlserver.ssrs.reportexecution2005.*;version=#{version}"
