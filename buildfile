@@ -1,10 +1,10 @@
 VERSION_NUMBER = "1.0.0-SNAPSHOT"
 GROUP = 'au.com.stocksoftware'
 
-require 'buildr_bnd'
+require "buildr/bnd"
 
-repositories.remote << 'http://www.ibiblio.org/maven2'
 repositories.remote << Buildr::Bnd.remote_repository
+repositories.remote << 'http://www.ibiblio.org/maven2'
 
 class CentralLayout < Layout::Default
   def initialize(key, top_level, use_subdir)

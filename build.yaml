@@ -1,2 +1,2 @@
 gems:
-  - buildr-bnd = 0.0.5
+  - buildr >= 1.4.6
