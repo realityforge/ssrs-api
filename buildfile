@@ -1,7 +1,6 @@
 require 'buildr/single_intermediate_layout'
 require 'buildr/top_level_generate_dir'
 require 'buildr/git_auto_version'
-require 'buildr/bnd'
 
 def wsimport(project, wsdl_file, endpoint_url_spec, package_name)
   dir = project._(:target, :generated, :main, :java)
