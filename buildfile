@@ -47,9 +47,9 @@ end
 desc 'SSRS API'
 define_with_central_layout('ssrs', true) do
   project.version = VERSION_NUMBER
-  compile.options.source = '1.6'
-  compile.options.target = '1.6'
   project.group = 'org.realityforge.ssrs'
+  compile.options.source = '1.7'
+  compile.options.target = '1.7'
   compile.options.lint = 'all'
 
   desc "SSRS API: Report Service 2005"
