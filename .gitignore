@@ -1,4 +1,5 @@
-/*.iml
-/.rakeTasks
+/*.iws
+/*.ipr
+*.iml
 /target
 /Gemfile.lock
