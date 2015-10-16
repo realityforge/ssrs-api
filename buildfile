@@ -33,6 +33,8 @@ define 'ssrs' do
   compile.options.target = '1.7'
   compile.options.lint = 'all'
 
+  project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
+
   desc 'SSRS API: Report Service 2005'
   define 'report-service-2005' do
     project.no_iml
