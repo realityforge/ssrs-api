@@ -1,7 +1,7 @@
 /*.iws
 /*.ipr
 *.iml
-/*/generated
+/generated
 /target
 /Gemfile.lock
 /tmp

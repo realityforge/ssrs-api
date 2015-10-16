@@ -41,39 +41,12 @@ define 'ssrs' do
   pom.add_github_project('realityforge/ssrs-api')
   pom.add_developer('realityforge', 'Peter Donald', 'peter@realityforge.org', ['Developer'])
 
-  desc 'SSRS API: Report Service 2005'
-  define 'report-service-2005' do
-    project.no_iml
-    wsimport(project,
-             _('../src/main/wsdl/ReportService2005.wsdl'),
-             'Server/ReportService2005.asmx',
-             'org.realityforge.sqlserver.ssrs.reportservice2005')
+  wsimport(project,
+           _('src/main/wsdl/ReportService2005.wsdl'),
+           'Server/ReportService2005.asmx',
+           'org.realityforge.sqlserver.ssrs.reportservice2005')
 
-    package(:jar)
-    package(:sources)
-  end
-
-  desc 'SSRS API:  Report Execution 2005'
-  define 'report-execution-2005' do
-    project.no_iml
-    gen_task = wsimport(project,
-                        _('../src/main/wsdl/ReportExecution2005.wsdl'),
-                        'Server/ReportExecution2005.asmx',
-                        'org.realityforge.sqlserver.ssrs.reportexecution2005')
-   
-    task 'post-process-source' => [gen_task] do
-      filename = project._(:target, :generated, :main, :java, 'org/realityforge/sqlserver/ssrs/reportexecution2005/ExecutionHeader.java')
-      mv filename, "#{filename}.bak" 
-      File.open(filename,'w+') do |output_file|
-        output_file.puts File.read("#{filename}.bak").gsub(/public class ExecutionHeader/, '@javax.xml.bind.annotation.XmlRootElement(name="ExecutionHeader")  public class ExecutionHeader')
-      end
-	  rm "#{filename}.bak"
-    end
-
-    compile.prerequisites << 'post-process-source'
-
-    package(:jar)
-    package(:sources)
-  end
+  package(:jar)
+  package(:sources)
 end
 
