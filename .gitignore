@@ -5,3 +5,4 @@
 /target
 /Gemfile.lock
 /tmp
+/_buildr.rb
