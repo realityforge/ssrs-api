@@ -11,14 +11,14 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
-import org.realityforge.sqlserver.ssrs.reportservice2005.ArrayOfProperty;
-import org.realityforge.sqlserver.ssrs.reportservice2005.ArrayOfWarning;
-import org.realityforge.sqlserver.ssrs.reportservice2005.CredentialRetrievalEnum;
-import org.realityforge.sqlserver.ssrs.reportservice2005.DataSourceDefinition;
-import org.realityforge.sqlserver.ssrs.reportservice2005.ItemTypeEnum;
-import org.realityforge.sqlserver.ssrs.reportservice2005.ReportingService2005;
-import org.realityforge.sqlserver.ssrs.reportservice2005.ReportingService2005Soap;
-import org.realityforge.sqlserver.ssrs.reportservice2005.Warning;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.ArrayOfProperty;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.ArrayOfWarning;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.CredentialRetrievalEnum;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.DataSourceDefinition;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.ItemTypeEnum;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.ReportingService2005;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.ReportingService2005Soap;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.Warning;
 
 /**
  * Adapter class for interacting with the SSRS service from ruby code.

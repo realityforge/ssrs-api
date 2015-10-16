@@ -3,30 +3,7 @@ require 'buildr/top_level_generate_dir'
 require 'buildr/git_auto_version'
 require 'buildr/gpg'
 require 'buildr/custom_pom'
-
-def wsimport(project, wsdl_file, endpoint_url_spec, package_name)
-  dir = project._(:target, :generated, :main, :java)
-  # A file we know will exist when generator runs
-  package_info_filename = "#{dir}/#{package_name.gsub('.', '/')}/package-info.java"
-  directory(dir)
-  file(package_info_filename => [dir, wsdl_file]) do
-    system "wsimport",
-           wsdl_file,
-           "-quiet",
-           "-Xnocompile",
-           "-wsdllocation",
-           "http://example.org/#{endpoint_url_spec}",
-           "-keep",
-           "-s",
-           dir,
-           "-p",
-           package_name
-  end
-  project.compile.prerequisites << package_info_filename
-  project.compile.from dir
-  file(package_info_filename)
-end
-
+require 'buildr/wsgen'
 
 desc 'SSRS API'
 define 'ssrs' do
@@ -41,10 +18,9 @@ define 'ssrs' do
   pom.add_github_project('realityforge/ssrs-api')
   pom.add_developer('realityforge', 'Peter Donald', 'peter@realityforge.org', ['Developer'])
 
-  wsimport(project,
-           _('src/main/wsdl/ReportService2005.wsdl'),
-           'Server/ReportService2005.asmx',
-           'org.realityforge.sqlserver.ssrs.reportservice2005')
+  Buildr::Wsgen.wsdl2java(project,
+                          {_('src/main/wsdl/ReportingService2005.wsdl') => {}},
+                          :package => 'org.realityforge.sqlserver.ssrs.reportingservice2005')
 
   package(:jar)
   package(:sources)
