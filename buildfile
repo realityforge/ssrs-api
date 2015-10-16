@@ -30,7 +30,7 @@ end
 
 desc 'SSRS API'
 define 'ssrs' do
-  project.group = 'org.realityforge.ssrs'
+  project.group = 'org.realityforge.sqlserver.ssrs'
   compile.options.source = '1.7'
   compile.options.target = '1.7'
   compile.options.lint = 'all'
@@ -47,7 +47,7 @@ define 'ssrs' do
     wsimport(project,
              _('../src/main/wsdl/ReportService2005.wsdl'),
              'Server/ReportService2005.asmx',
-             'com.microsoft.sqlserver.ssrs.reportservice2005')
+             'org.realityforge.sqlserver.ssrs.reportservice2005')
 
     package(:jar)
     package(:sources)
@@ -59,10 +59,10 @@ define 'ssrs' do
     gen_task = wsimport(project,
                         _('../src/main/wsdl/ReportExecution2005.wsdl'),
                         'Server/ReportExecution2005.asmx',
-                        'com.microsoft.sqlserver.ssrs.reportexecution2005')
+                        'org.realityforge.sqlserver.ssrs.reportexecution2005')
    
     task 'post-process-source' => [gen_task] do
-      filename = project._(:target, :generated, :main, :java, 'com/microsoft/sqlserver/ssrs/reportexecution2005/ExecutionHeader.java')
+      filename = project._(:target, :generated, :main, :java, 'org/realityforge/sqlserver/ssrs/reportexecution2005/ExecutionHeader.java')
       mv filename, "#{filename}.bak" 
       File.open(filename,'w+') do |output_file|
         output_file.puts File.read("#{filename}.bak").gsub(/public class ExecutionHeader/, '@javax.xml.bind.annotation.XmlRootElement(name="ExecutionHeader")  public class ExecutionHeader')
