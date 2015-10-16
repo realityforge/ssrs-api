@@ -1,5 +1,4 @@
 VERSION_NUMBER = "1.0.0-SNAPSHOT"
-GROUP = 'au.com.stocksoftware'
 
 require "buildr/bnd"
 
@@ -48,9 +47,9 @@ end
 desc 'SSRS API'
 define_with_central_layout('ssrs', true) do
   project.version = VERSION_NUMBER
-  project.group = GROUP
   compile.options.source = '1.6'
   compile.options.target = '1.6'
+  project.group = 'org.realityforge.ssrs'
   compile.options.lint = 'all'
 
   desc "SSRS API: Report Service 2005"
