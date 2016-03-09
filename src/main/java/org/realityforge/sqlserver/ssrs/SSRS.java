@@ -135,8 +135,9 @@ public class SSRS
   /**
    * Create a report at specific path from specified report file. Path must not exist.
    */
-  public void createReport( final String path, final File file )
+  public void createReport( final String path, final String filename )
   {
+    final File file = new File( filename );
     info( "Creating Report " + path );
     final String physicalName = toPhysicalFileName( path );
     LOG.fine( "Creating Report with symbolic item " + path + " as " + physicalName );
