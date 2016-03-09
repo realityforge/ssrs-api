@@ -3,16 +3,21 @@ package org.realityforge.sqlserver.ssrs;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.ArrayOfCatalogItem;
 import org.realityforge.sqlserver.ssrs.reportingservice2005.ArrayOfProperty;
 import org.realityforge.sqlserver.ssrs.reportingservice2005.ArrayOfWarning;
+import org.realityforge.sqlserver.ssrs.reportingservice2005.CatalogItem;
 import org.realityforge.sqlserver.ssrs.reportingservice2005.CredentialRetrievalEnum;
 import org.realityforge.sqlserver.ssrs.reportingservice2005.DataSourceDefinition;
 import org.realityforge.sqlserver.ssrs.reportingservice2005.ItemTypeEnum;
@@ -166,6 +171,75 @@ public class SSRS
   }
 
   /**
+   * Create a report at specific path from specified report file. Path must not exist.
+   */
+  public void downloadReport( final String path, final String filename )
+  {
+    final File file = new File( filename );
+    final String physicalName = toPhysicalFileName( path );
+
+    info( "Downloading Report with symbolic name " + path + " to " + file );
+
+    final byte[] data = _soap.getReportDefinition( physicalName );
+
+    try ( final FileOutputStream out = new FileOutputStream( file ) )
+    {
+      out.write( data );
+    }
+    catch ( final IOException ioe )
+    {
+      final String message = "Failed to download report with symbolic name " + path + " to " + file;
+      LOG.warning( message );
+      if ( file.exists() && !file.delete() )
+      {
+        throw new IllegalStateException( message + " and failed to delete temporary file", ioe );
+      }
+      else
+      {
+        throw new IllegalStateException( message, ioe );
+
+      }
+    }
+  }
+
+  /**
+   * List files at symbolic path.
+   */
+  public String[] listReports( final String path )
+  {
+    info( "Listing Reports at " + path );
+    final List<CatalogItem> catalogItems = listItems( path );
+    final ArrayList<String> list = new ArrayList<String>();
+    for ( final CatalogItem item : catalogItems )
+    {
+      if ( item.getType() == ItemTypeEnum.REPORT )
+      {
+        list.add( item.getName() );
+      }
+    }
+    return list.toArray( new String[ list.size() ] );
+  }
+
+  /**
+   * List directories at symbolic path.
+   */
+  public String[] listFolders( final String path )
+  {
+    info( "Listing Folders at " + path );
+    final List<CatalogItem> catalogItems = listItems( path );
+
+    final ArrayList<String> list = new ArrayList<String>();
+    for ( final CatalogItem item : catalogItems )
+    {
+      if ( item.getType() == ItemTypeEnum.FOLDER )
+      {
+        list.add( item.getName() );
+      }
+    }
+    return list.toArray( new String[ list.size() ] );
+  }
+
+  /**
    * Delete symbolic path and all sub elements. Will skip if no such path.
    */
   public void delete( final String path )
@@ -299,5 +373,13 @@ public class SSRS
     {
       throw new IllegalStateException( "Unable to load report file " + file.getAbsolutePath() );
     }
+  }
+
+  private List<CatalogItem> listItems( final String path )
+  {
+    final String physicalName = toPhysicalFileName( path );
+    LOG.finer( "Invoking listChildren(item=" + physicalName + ")" );
+    final ArrayOfCatalogItem children = _soap.listChildren( physicalName, false );
+    return children.getCatalogItem();
   }
 }
