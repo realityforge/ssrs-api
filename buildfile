@@ -2,7 +2,6 @@ require 'buildr/single_intermediate_layout'
 require 'buildr/top_level_generate_dir'
 require 'buildr/git_auto_version'
 require 'buildr/gpg'
-require 'buildr/custom_pom'
 require 'buildr/wsgen'
 
 desc 'SSRS API'
