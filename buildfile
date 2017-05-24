@@ -23,6 +23,5 @@ define 'ssrs' do
 
   package(:jar)
   package(:sources)
-  package(:javadoc)
 end
 
