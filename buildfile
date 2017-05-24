@@ -7,8 +7,8 @@ require 'buildr/wsgen'
 desc 'SSRS API'
 define 'ssrs' do
   project.group = 'org.realityforge.sqlserver.ssrs'
-  compile.options.source = '1.7'
-  compile.options.target = '1.7'
+  compile.options.source = '1.8'
+  compile.options.target = '1.8'
   compile.options.lint = 'all'
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
