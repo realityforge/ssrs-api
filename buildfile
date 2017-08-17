@@ -24,4 +24,3 @@ define 'ssrs' do
   package(:jar)
   package(:sources)
 end
-

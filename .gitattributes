@@ -1,1 +1,14 @@
-* crlf=input
+# DO NOT EDIT: File is auto-generated
+* -text
+*.java text
+*.md text
+*.txt text
+*.wsdl text
+*.yaml text
+*.yml text
+.gitattributes text
+.gitignore text
+.ruby-version text
+Gemfile text
+LICENSE text
+buildfile text
