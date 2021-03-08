@@ -23,4 +23,6 @@ define 'ssrs' do
 
   package(:jar)
   package(:sources)
+
+  ipr.add_component_from_artifact(:idea_codestyle)
 end
