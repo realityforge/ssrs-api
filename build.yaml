@@ -3,3 +3,5 @@ repositories:
    - https://repo.maven.apache.org/maven2
 artifacts:
   idea_codestyle: au.com.stocksoftware.idea.codestyle:idea-codestyle:xml:1.14
+
+  getopt4j: org.realityforge.getopt4j:getopt4j:jar:1.3

@@ -21,7 +21,12 @@ define 'ssrs' do
                           {_('src/main/wsdl/ReportingService2005.wsdl') => {}},
                           :package => 'org.realityforge.sqlserver.ssrs.reportingservice2005')
 
+  compile.with :getopt4j
+
   package(:jar)
+  package(:jar, :classifier => 'all').tap do |jar|
+    jar.merge(artifact(:getopt4j))
+  end
   package(:sources)
 
   ipr.add_component_from_artifact(:idea_codestyle)
