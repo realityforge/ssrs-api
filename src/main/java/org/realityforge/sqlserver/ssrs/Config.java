@@ -2,6 +2,6 @@ package org.realityforge.sqlserver.ssrs;
 
 public class Config
 {
-  DataSource[] dataSources;
-  Report[] reports;
+  public DataSource[] dataSources;
+  public Report[] reports;
 }
