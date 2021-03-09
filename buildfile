@@ -27,6 +27,8 @@ define 'ssrs' do
                :javax_json,
                :javax_annotation
 
+  project.doc.options.merge!('Xdoclint:none' => true)
+
   package(:jar)
   package(:jar, :classifier => 'all').tap do |jar|
     jar.with :manifest => { 'Main-Class' => 'org.realityforge.sqlserver.ssrs.Main' }
@@ -37,6 +39,7 @@ define 'ssrs' do
     jar.merge(artifact(:getopt4j))
   end
   package(:sources)
+  package(:javadoc)
 
   ipr.add_component_from_artifact(:idea_codestyle)
 end
