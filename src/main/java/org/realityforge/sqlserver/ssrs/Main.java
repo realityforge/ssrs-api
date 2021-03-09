@@ -123,6 +123,7 @@ public class Main
     catch ( final Throwable t )
     {
       c_logger.log( Level.SEVERE, "Error: Error processing action: " + t );
+      t.printStackTrace();
       System.exit( ERROR_OTHER_EXIT_CODE );
       return;
     }
