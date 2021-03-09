@@ -21,10 +21,12 @@ define 'ssrs' do
                           {_('src/main/wsdl/ReportingService2005.wsdl') => {}},
                           :package => 'org.realityforge.sqlserver.ssrs.reportingservice2005')
 
-  compile.with :getopt4j
+  compile.with :getopt4j,
+               :javax_annotation
 
   package(:jar)
   package(:jar, :classifier => 'all').tap do |jar|
+    jar.merge(artifact(:javax_annotation))
     jar.merge(artifact(:getopt4j))
   end
   package(:sources)
