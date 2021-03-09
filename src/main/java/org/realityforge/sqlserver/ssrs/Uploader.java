@@ -75,8 +75,8 @@ final class Uploader
     return Stream
       .of( reports )
       .map( r -> {
-        final String[] parts = r.name.split( "/" );
-        return parts.length > 1 ? parts[ 0 ] : null;
+        final String[] parts = r.name.replaceFirst( "^/", "" ).split( "/" );
+        return parts.length > 1 && !parts[ 0 ].equals( "" ) ? parts[ 0 ] : null;
       } )
       .filter( Objects::nonNull )
       .distinct()
