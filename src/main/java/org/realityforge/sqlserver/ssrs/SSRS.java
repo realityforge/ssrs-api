@@ -209,7 +209,7 @@ public class SSRS
   {
     info( "Listing Reports at " + path );
     final List<CatalogItem> catalogItems = listItems( path );
-    final ArrayList<String> list = new ArrayList<String>();
+    final ArrayList<String> list = new ArrayList<>();
     for ( final CatalogItem item : catalogItems )
     {
       if ( item.getType() == ItemTypeEnum.REPORT )
@@ -217,7 +217,7 @@ public class SSRS
         list.add( item.getName() );
       }
     }
-    return list.toArray( new String[ list.size() ] );
+    return list.toArray( new String[ 0 ] );
   }
 
   /**
@@ -228,7 +228,7 @@ public class SSRS
     info( "Listing Folders at " + path );
     final List<CatalogItem> catalogItems = listItems( path );
 
-    final ArrayList<String> list = new ArrayList<String>();
+    final List<String> list = new ArrayList<>();
     for ( final CatalogItem item : catalogItems )
     {
       if ( item.getType() == ItemTypeEnum.FOLDER )
@@ -236,7 +236,7 @@ public class SSRS
         list.add( item.getName() );
       }
     }
-    return list.toArray( new String[ list.size() ] );
+    return list.toArray( new String[ 0 ] );
   }
 
   /**
