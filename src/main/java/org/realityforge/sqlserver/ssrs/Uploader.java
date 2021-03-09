@@ -37,12 +37,17 @@ final class Uploader
     deleteReports( reports );
     for ( final Report report : reports )
     {
-      final String lastPartRemoved = report.name.replace( "/[^/]*$", "" );
-      if ( !lastPartRemoved.equals( report.name ) )
-      {
-        _ssrs.mkdir( lastPartRemoved );
-      }
+      createParentDirectory( report.name );
       _ssrs.createReport( report.name, report.filename );
+    }
+  }
+
+  private void createParentDirectory( @Nonnull final String itemName )
+  {
+    final String directory = itemName.replaceAll( "/[^/]*$", "" );
+    if ( !directory.equals( itemName ) )
+    {
+      _ssrs.mkdir( directory );
     }
   }
 
