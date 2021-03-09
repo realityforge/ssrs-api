@@ -29,6 +29,7 @@ define 'ssrs' do
 
   package(:jar)
   package(:jar, :classifier => 'all').tap do |jar|
+    jar.with :manifest => { 'Main-Class' => 'org.realityforge.sqlserver.ssrs.Main' }
     jar.merge(artifact(:javax_annotation))
     jar.merge(artifact(:jsonb_api))
     jar.merge(artifact(:yasson))
