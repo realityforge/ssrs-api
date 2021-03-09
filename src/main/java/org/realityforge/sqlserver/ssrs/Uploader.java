@@ -55,6 +55,7 @@ final class Uploader
   {
     for ( final DataSource dataSource : dataSources )
     {
+      createParentDirectory( dataSource.name );
       _ssrs.delete( dataSource.name );
       _ssrs.createSQLDataSource( dataSource.name, dataSource.connectionString );
     }
