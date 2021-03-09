@@ -22,11 +22,17 @@ define 'ssrs' do
                           :package => 'org.realityforge.sqlserver.ssrs.reportingservice2005')
 
   compile.with :getopt4j,
+               :jsonb_api,
+               :yasson,
+               :javax_json,
                :javax_annotation
 
   package(:jar)
   package(:jar, :classifier => 'all').tap do |jar|
     jar.merge(artifact(:javax_annotation))
+    jar.merge(artifact(:jsonb_api))
+    jar.merge(artifact(:yasson))
+    jar.merge(artifact(:javax_json))
     jar.merge(artifact(:getopt4j))
   end
   package(:sources)
