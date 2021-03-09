@@ -12,8 +12,6 @@ import javax.annotation.Nullable;
 final class Uploader
 {
   @Nonnull
-  private final static String BASE_PATH = "DataSources";
-  @Nonnull
   private final SSRS _ssrs;
 
   Uploader( @Nonnull final String reportTarget,
@@ -57,9 +55,8 @@ final class Uploader
   {
     for ( final DataSource dataSource : dataSources )
     {
-      final String symbolicName = getSymbolicName( dataSource );
-      _ssrs.delete( symbolicName );
-      _ssrs.createSQLDataSource( symbolicName, getConnectionString( dataSource ) );
+      _ssrs.delete( dataSource.name );
+      _ssrs.createSQLDataSource( dataSource.name, dataSource.connectionString );
     }
   }
 
@@ -67,7 +64,7 @@ final class Uploader
   {
     for ( final DataSource dataSource : dataSources )
     {
-      _ssrs.delete( getSymbolicName( dataSource ) );
+      _ssrs.delete( dataSource.name );
     }
   }
 
@@ -84,23 +81,5 @@ final class Uploader
       .distinct()
       .sorted()
       .collect( Collectors.toList() );
-  }
-
-  @Nonnull
-  private String getSymbolicName( @Nonnull final DataSource dataSource )
-  {
-    return BASE_PATH + "/" + dataSource.name;
-  }
-
-  @Nonnull
-  private String getConnectionString( @Nonnull final DataSource dataSource )
-  {
-    final String auth =
-      null != dataSource.username || null != dataSource.password ?
-      "User Id=" + dataSource.username + ";Password=" + dataSource.password :
-      "Integrated Security=SSPI";
-    return "Data Source=" +
-           dataSource.host + ( null == dataSource.instance ? "" : "\\" + dataSource.instance ) +
-           ";Initial Catalog=" + dataSource.database + ";" + auth + ";";
   }
 }
