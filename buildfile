@@ -15,7 +15,7 @@ define 'ssrs' do
 
   pom.add_apache_v2_license
   pom.add_github_project('realityforge/ssrs-api')
-  pom.add_developer('realityforge', 'Peter Donald', 'peter@realityforge.org', ['Developer'])
+  pom.add_developer('realityforge', 'Peter Donald')
 
   Buildr::Wsgen.wsdl2java(project,
                           {_('src/main/wsdl/ReportingService2005.wsdl') => {}},
