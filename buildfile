@@ -4,6 +4,8 @@ require 'buildr/git_auto_version'
 require 'buildr/gpg'
 require 'buildr/wsgen'
 
+Buildr::MavenCentral.define_publish_tasks(:profile_name => 'org.realityforge', :username => 'realityforge')
+
 desc 'SSRS API'
 define 'ssrs' do
   project.group = 'org.realityforge.sqlserver.ssrs'
